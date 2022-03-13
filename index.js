@@ -30,6 +30,15 @@ const server = http.createServer(function(req, res) {
 const wss = new WebSocket.Server({ port: 8082 }) // websocket server
 
 wss.on("connection", ws => {
+    console.log('Client connected !')
+    ws.on('message',(msg)=>{    // (3)
+        console.log("receive test")
+        console.log(`Message:${msg}`);
+        broadcast(msg)
+    })
+
+
+
     console.log("client connected")
     // let text="testing"
     // console.log(text.charAt(1))
@@ -45,6 +54,14 @@ wss.on("connection", ws => {
     ws.on("close", () => {
         console.log("client has disconnected");
     })
+
+    function broadcast(msg) {       // (4)
+        for(const client of wss.clients){
+            if(client.readyState === ws.OPEN){
+                client.send(msg)
+            }
+        }
+    }
 })
 
 server.listen(8081); // http server on 8081
@@ -57,3 +74,4 @@ function RandomLetterArray (arr) {
    
    return result;
 }
+

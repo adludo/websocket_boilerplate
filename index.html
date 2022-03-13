@@ -13,14 +13,48 @@
         <li>allows to way connection</li>
     </ul>
 
+    <form id="msgForm" class="msgForm">
+        <input type="text" placeholder="Send message" class="input" id="inputBox"/>
+        <input type="submit" class="btn" value="Send">
+    </form>
+
     <script>
+        
         const ws = new WebSocket("ws://localhost:8082");
 
+        ws.binaryType = "blob";
         ws.addEventListener("open", () => {
 
             ws.send('we connected to you')
             console.log("we connected")
         })
+
+        ws.onmessage = function(message){
+            console.log(message)
+            const msgDiv=document.createElement('div');
+
+            msgDiv.classList.add('msgCtn');
+            if (message.data instanceof Blob) {
+                reader = new FileReader();
+                reader.onload = () => {
+                    msgDiv.innerHTML = reader.result;
+                    document.getElementById('messages').appendChild(msgDiv);
+                };
+                reader.readAsText(message.data);
+            } else {
+                console.log("Result2: " + message.data);
+                msgDiv.innerHTML = message.data;
+                document.getElementById('messages').appendChild(msgDiv);
+            }
+        }
+        const form=document.getElementById('msgForm');
+        form.addEventListener('submit',(event) => {
+            event.preventDefault();
+            const message=document.getElementById('inputBox').value;
+            ws.send(message);
+            document.getElementById('inputBox').value=''
+        })
+
     </script>
 
 </body>
