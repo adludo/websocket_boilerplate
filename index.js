@@ -17,7 +17,7 @@ const server = http.createServer(function(req, res) {
     url.pathname = '/index.html'
     url.path = '/index.html'
     url.href = '/index.html'
-    console.log(url)
+    // console.log(url)
     
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.end(fs.readFileSync(__dirname + url.pathname));
@@ -38,9 +38,12 @@ wss.on("connection", ws => {
     let letter_arr_new = RandomLetterArray(letter_arr)
     console.log(letter_arr_new)
 
+    ws.on("message", data => {
+        console.log('client has sent:' + data);
+    })
 
     ws.on("close", () => {
-        console.log("client has disconnected")
+        console.log("client has disconnected");
     })
 })
 

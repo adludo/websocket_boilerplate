@@ -17,6 +17,8 @@
         const ws = new WebSocket("ws://localhost:8082");
 
         ws.addEventListener("open", () => {
+
+            ws.send('we connected to you')
             console.log("we connected")
         })
     </script>
