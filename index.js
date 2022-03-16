@@ -5,7 +5,8 @@ const fs   = require('fs');
 const URL = require('url').Url
 
 const server = http.createServer(function(req, res) {
-    console.log(req.url)
+    // console.log("testing")
+    // console.log(req.url)
     // var url = URL.parse(req.url);
     // const baseURL =  req.protocol + '://' + req.headers.host + '/';
     // const baseURL =  'https://' + req.headers.host + '/';
@@ -14,9 +15,9 @@ const server = http.createServer(function(req, res) {
 
     // fix this at some point
     var url = new URL(req.url);
-    url.pathname = '/index.html'
-    url.path = '/index.html'
-    url.href = '/index.html'
+    url.pathname = '/intro.html'
+    url.path = '/intro.html'
+    url.href = '/intro.html'
     // console.log(url)
     
     res.writeHead(200, { 'Content-Type': 'text/html' });
