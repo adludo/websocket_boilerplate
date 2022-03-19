@@ -12,16 +12,25 @@ const server = http.createServer(function(req, res) {
     // const baseURL =  'https://' + req.headers.host + '/';
     // console.log(baseURL)
     // const url = new URL(req.url,baseURL);
-
     // fix this at some point
-    var url = new URL(req.url);
-    url.pathname = '/intro.html'
-    url.path = '/intro.html'
-    url.href = '/intro.html'
+    // var url = new URL(req.url);
+    // url.pathname = '/index.html'
+    // url.path = '/index.html'
+    // url.href = '/index.html'
     // console.log(url)
+
+    if(req.url === '/home' || req.url === '/'){
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(fs.readFileSync(__dirname + '/index.html'));
+    } else if (req.url === "/assets/style.css"){
+        res.writeHead(200, { 'Content-Type': 'text/css' });
+        res.end(fs.readFileSync(__dirname + '/assets/style.css'));
+    } else {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(fs.readFileSync(__dirname + '/html404.html'));
+    }
     
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.end(fs.readFileSync(__dirname + url.pathname));
+    
 });
 
 // const wss = new WebSocket.Server({ server });
