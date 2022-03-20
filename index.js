@@ -5,20 +5,6 @@ const fs   = require('fs');
 const URL = require('url').Url
 
 const server = http.createServer(function(req, res) {
-    // console.log("testing")
-    // console.log(req.url)
-    // var url = URL.parse(req.url);
-    // const baseURL =  req.protocol + '://' + req.headers.host + '/';
-    // const baseURL =  'https://' + req.headers.host + '/';
-    // console.log(baseURL)
-    // const url = new URL(req.url,baseURL);
-    // fix this at some point
-    // var url = new URL(req.url);
-    // url.pathname = '/index.html'
-    // url.path = '/index.html'
-    // url.href = '/index.html'
-    // console.log(url)
-
     if(req.url === '/home' || req.url === '/'){
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(fs.readFileSync(__dirname + '/index.html'));
@@ -29,11 +15,8 @@ const server = http.createServer(function(req, res) {
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(fs.readFileSync(__dirname + '/html404.html'));
     }
-    
-    
 });
 
-// const wss = new WebSocket.Server({ server });
 
 
 // const Websocket = require("ws");
@@ -47,11 +30,7 @@ wss.on("connection", ws => {
         broadcast(msg)
     })
 
-
-
     console.log("client connected")
-    // let text="testing"
-    // console.log(text.charAt(1))
 
     let letter_arr = ''
     let letter_arr_new = RandomLetterArray(letter_arr)
